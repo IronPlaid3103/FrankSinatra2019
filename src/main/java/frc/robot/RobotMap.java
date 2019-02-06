@@ -31,7 +31,7 @@ public class RobotMap {
   public static int backTalon = 5;
   public static int frTalon = 6;
   public static int flTalon = 7;
-public static int mechTalon1;
-public static int mechTalon2;
+  public static int mechTalon1;
+  public static int mechTalon2;
 
 }

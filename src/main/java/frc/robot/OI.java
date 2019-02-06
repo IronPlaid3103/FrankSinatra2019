@@ -16,8 +16,8 @@ import frc.robot.commands.CargoUp;
 import frc.robot.commands.HatchReset;
 import frc.robot.commands.HatchRetrieve;
 import frc.robot.commands.HatchScore;
-import frc.robot.commands.PushStop;
-import frc.robot.commands.PushUp;
+import frc.robot.commands.ClimberStop;
+import frc.robot.commands.ClimberGo;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -33,22 +33,29 @@ public class OI {
       Button Reset = new JoystickButton(command, 1); // Button A
       Button Retrieve = new JoystickButton(command, 2); // Button B
       Button Score = new JoystickButton(command, 3); // Button X
-      Button up = new JoystickButton(command, 5); // left bumper
-      Button down = new JoystickButton(command, 6); // right bumper
-      Button intake = new JoystickButton(command, 7); // 3 line button
-      Button deliver = new JoystickButton(command, 8); // double square button
-      Button climbergo = new JoystickButton(driver, 1); //A on the drivers remote
-      Button climberstop = new JoystickButton(driver, 2); //B on the drivers remote
+      
+      Button Up = new JoystickButton(command, 5); // left bumper
+      Button Down = new JoystickButton(command, 6); // right bumper
+      
+      Button Intake = new JoystickButton(command, 7); // 3 line button
+      Button Deliver = new JoystickButton(command, 8); // double square button
+      
+      Button ClimberGo = new JoystickButton(driver, 1); //A on the drivers remote
+      Button ClimberStop = new JoystickButton(driver, 2); //B on the drivers remote
 
-      intake.whileHeld(new CargoIntake());
-      deliver.whileHeld(new CargoDeliver());
-      up.whileHeld(new CargoUp());
-      down.whileHeld(new CargoDown());
+      
+      Intake.whileHeld(new CargoIntake());
+      Deliver.whileHeld(new CargoDeliver());
+      
+      Up.whileHeld(new CargoUp());
+      Down.whileHeld(new CargoDown());
+      
       Reset.whileHeld(new HatchReset());
       Retrieve.whileHeld(new HatchRetrieve());
       Score.whileHeld(new HatchScore());
-      climbergo.whileHeld(new PushUp());
-      climberstop.whileHeld(new PushStop());
+      
+      ClimberGo.whileHeld(new ClimberGo());
+      ClimberStop.whileHeld(new ClimberStop());
   }
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a

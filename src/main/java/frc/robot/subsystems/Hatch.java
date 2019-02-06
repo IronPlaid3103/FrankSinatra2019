@@ -11,31 +11,30 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.commands.HatchReset;
 
-
 /**
  * Add your docs here.
  */
 public class Hatch extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  Solenoid finger = new Solenoid(0);
+  Solenoid finger = new Solenoid(3);
   Solenoid pusher = new Solenoid(1);
-  
-  public void score(){
-    finger.set(false);
-    //TODO: we need to pause here for half of a second
+
+  public void score() {
+    finger.set(true);
+    // TODO: we need to pause here for half of a second
     pusher.set(true);
   }
 
-  public void reset(){
+  public void reset() {
     pusher.set(false);
+    finger.set(false);
+  }
+
+  public void retrieve() {
     finger.set(true);
   }
 
-  public void retrieve(){
-    finger.set(true);
-  }
-  
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

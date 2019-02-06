@@ -10,12 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-
-public class arcade_drive extends Command {
-  public arcade_drive() {
-    requires(Robot.kopchassis);
+public class ClimberGo extends Command {
+  public ClimberGo() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.climber);
   }
 
   // Called just before this Command runs the first time
@@ -26,7 +25,7 @@ public class arcade_drive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.kopchassis.teleopDrive(Robot.m_oi.returnJoystickDrive());
+    Robot.climber.pushup();
   }
 
   // Make this return true when this Command no longer needs to run execute()

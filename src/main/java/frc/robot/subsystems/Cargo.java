@@ -24,7 +24,7 @@ public class Cargo extends Subsystem {
   WPI_TalonSRX mechTalon1 = new WPI_TalonSRX(RobotMap.mechTalon1);
   WPI_TalonSRX mechTalon2 = new WPI_TalonSRX(RobotMap.mechTalon2);
 
-  public void CargoInit(){
+  public void CargoInit() {
     // double intake = JoystickButton(1);
     // double deliver = JoystickButton(4);
 
@@ -32,42 +32,42 @@ public class Cargo extends Subsystem {
 
     frTalon.setInverted(false);
     flTalon.setInverted(false);
-    
+
     mechTalon1.setInverted(true);
     mechTalon2.setInverted(false);
 
-    setDefaultCommand(new CargoStop());
+    initDefaultCommand();
 
-}
+  }
 
   public void up() {
     frTalon.set(1);
     flTalon.set(1);
   }
 
-  public void down(){
+  public void down() {
     frTalon.set(-1);
     flTalon.set(-1);
   }
 
-  public void intake(){
+  public void intake() {
     mechTalon1.set(-1);
     mechTalon2.set(-1);
 
   }
 
-  public void deliver(){
+  public void deliver() {
     mechTalon1.set(1);
     mechTalon2.set(1);
   }
-  
-  public void stop(){
+
+  public void stop() {
     mechTalon1.set(0);
     mechTalon2.set(0);
     frTalon.set(0);
     flTalon.set(0);
   }
-  
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
