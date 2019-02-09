@@ -36,7 +36,7 @@ public class Cargo extends Subsystem {
     mechTalon1.setInverted(true);
     mechTalon2.setInverted(false);
 
-    initDefaultCommand();
+  
 
   }
 
@@ -72,5 +72,6 @@ public class Cargo extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+      setDefaultCommand(new CargoStop());
   }
 }
