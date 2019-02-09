@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -26,36 +27,36 @@ import frc.robot.commands.ClimberGo;
 public class OI {
   Joystick driver = new Joystick(0);
   Joystick command = new Joystick(1);
-  public Joystick returnJoystickDrive(){
+
+  public Joystick returnJoystickDrive() {
     return driver;
   }
-    public OI(){
-      Button Reset = new JoystickButton(command, 1); // Button A
-      Button Retrieve = new JoystickButton(command, 2); // Button B
-      Button Score = new JoystickButton(command, 3); // Button X
-      
-      Button Up = new JoystickButton(command, 5); // left bumper
-      Button Down = new JoystickButton(command, 6); // right bumper
-      
-      Button Intake = new JoystickButton(command, 7); // 3 line button
-      Button Deliver = new JoystickButton(command, 8); // double square button
-      
-      Button ClimberGo = new JoystickButton(driver, 1); //A on the drivers remote
-      Button ClimberStop = new JoystickButton(driver, 2); //B on the drivers remote
 
-      
-      Intake.whileHeld(new CargoIntake());
-      Deliver.whileHeld(new CargoDeliver());
-      
-      Up.whileHeld(new CargoUp());
-      Down.whileHeld(new CargoDown());
-      
-      Reset.whileHeld(new HatchReset());
-      Retrieve.whileHeld(new HatchRetrieve());
-      Score.whileHeld(new HatchScore());
-      
-      ClimberGo.whileHeld(new ClimberGo());
-      ClimberStop.whileHeld(new ClimberStop());
+  public OI() {
+
+    Button Retrieve = new JoystickButton(command, 2); // Button B
+    Button Score = new JoystickButton(command, 3); // Button X
+
+    Button Up = new JoystickButton(command, 5); // left bumper
+    Button Down = new JoystickButton(command, 6); // right bumper
+
+    Button Intake = new JoystickButton(command, 7); // 3 line button
+    Button Deliver = new JoystickButton(command, 8); // double square button
+
+    Button ClimberGo = new JoystickButton(driver, 1); // A on the drivers remote
+    Button ClimberStop = new JoystickButton(driver, 2); // B on the drivers remote
+
+    Intake.whileHeld(new CargoIntake());
+    Deliver.whileHeld(new CargoDeliver());
+
+    Up.whileHeld(new CargoUp());
+    Down.whileHeld(new CargoDown());
+
+    Retrieve.whileHeld(new HatchRetrieve());
+    Score.whileHeld(new HatchScore());
+
+    ClimberGo.whileHeld(new ClimberGo());
+    ClimberStop.whileHeld(new ClimberStop());
   }
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
