@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.Cargo;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Hatch;
-import frc.robot.subsystems.tank_drive;
+import frc.robot.subsystems.Tank_Drive;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,7 +26,7 @@ import frc.robot.subsystems.tank_drive;
  */
 public class Robot extends TimedRobot {
   public static OI m_oi;
-  public static tank_drive kopchassis = new tank_drive();
+  public static Tank_Drive kopchassis = new Tank_Drive();
   public static Hatch hatch;// = new Hatch();
   public static Cargo cargo;// = new Cargo();
   public static Climber climber;
