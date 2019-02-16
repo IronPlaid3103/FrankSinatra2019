@@ -10,15 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.CargoDeliver;
-import frc.robot.commands.CargoDown;
-import frc.robot.commands.CargoIntake;
-import frc.robot.commands.CargoUp;
-import frc.robot.commands.HatchReset;
-import frc.robot.commands.HatchRetrieve;
-import frc.robot.commands.HatchScore;
-import frc.robot.commands.ClimberStop;
-import frc.robot.commands.ClimberGo;
+import frc.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -31,12 +23,12 @@ public class OI {
   public Joystick returnJoystickDrive() {
     return driver;
   }
-  public Joystick returnJoystickCommand(){
+
+  public Joystick returnJoystickCommand() {
     return command;
   }
 
   public OI() {
-
     Button Retrieve = new JoystickButton(command, 2); // Button B
     Button Score = new JoystickButton(command, 3); // Button X
 
@@ -62,8 +54,7 @@ public class OI {
     ClimberStop.whileHeld(new ClimberStop());
   }
   //// CREATING BUTTONS
-  // One type of button is a joystick button which is any button on a
-  //// joystick.
+  // One type of button is a joystick button which is any button on a joystick.
   // You create one by telling it which joystick it's on and which button
   // number it is.
   // Joystick stick = new Joystick(port);
