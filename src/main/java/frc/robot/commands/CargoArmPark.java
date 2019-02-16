@@ -14,7 +14,6 @@ import frc.robot.RobotMap;
 public class CargoArmPark extends Command {
   public CargoArmPark() {
     requires(Robot.cargo);
-    
   }
 
   // Called just before this Command runs the first time
@@ -38,7 +37,6 @@ public class CargoArmPark extends Command {
   @Override
   protected void end() {
     Robot.cargo.cargobrake();
-
   }
 
   // Called when another command which requires one or more of the same

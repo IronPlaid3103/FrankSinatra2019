@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Solenoid;
@@ -29,40 +30,49 @@ public class Cargo extends Subsystem {
 
   Solenoid brake = new Solenoid(7); // change this when we know which port
 
+  //https://www.chiefdelphi.com/t/talonsrx-isfinished-for-close-loop-control/340082
   int finalPositionCounter = 0;
 
-  public void CargoInit() {
+  public Cargo() {
 
     armTalon.setInverted(false);
-
-    cargomechTalon1.setInverted(true);
-    cargomechTalon2.setInverted(false);
-
-    cargomechTalon2.follow(cargomechTalon1);
 
     armTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
     armTalon.setSelectedSensorPosition(1024); // 90 degrees
 
+    //https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html
+    //TODO: instead of setting these here first, tune them using Phoenix Tuner, then set here in code using those values
     armTalon.config_kP(0, .1);
     armTalon.config_kI(0, 0);
     armTalon.config_kD(0, 0);
     armTalon.config_kF(0, 0);
 
     armTalon.setSensorPhase(true);
+
+    armTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
+
+    cargomechTalon1.setInverted(true);
+    cargomechTalon2.setInverted(false);
+
+    cargomechTalon2.follow(cargomechTalon1);
   }
 
   public void setArmAngle(double angle) {
     brake.set(false);
-    armTalon.set(ControlMode.Position, (angle * 4096 / 360.0));
+    armTalon.set(ControlMode.Position, (angle * 4096.0 / 360.0));
     int error = armTalon.getClosedLoopError();
 
+    //TODO: 34 encoder units is roughly equal to 3 degrees, so this allows for a threshold of +/- 3 degrees off target
+    //      >> adjust this if necessary, setting to appropriate *encoder units*
+    //      https://www.ctr-electronics.com/downloads/api/java/html/classcom_1_1ctre_1_1phoenix_1_1motorcontrol_1_1can_1_1_base_motor_controller.html#a64275de55a2c1012d6a2935b9a7b0938
     if (error < 34)
       finalPositionCounter++;
     else
-      finalPositionCounter = 0;
+      finalPositionCounter = 0; // reset if we went pass the threshold
   }
 
   public boolean isArmAtPosition() {
+    //TODO: determine if this is a sufficient number of counts/loops (5 ~= 100ms)
     if (finalPositionCounter > 5)
       return true;
     else

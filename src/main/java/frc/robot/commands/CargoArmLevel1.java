@@ -24,7 +24,7 @@ public class CargoArmLevel1 extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.cargo.setArmAngle(RobotMap.cargoLevel1); 
+    Robot.cargo.setArmAngle(RobotMap.cargoLevel1);
   }
 
   // Make this return true when this Command no longer needs to run execute()
