@@ -23,80 +23,85 @@ import frc.robot.commands.CargoStop;
 public class Cargo extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  WPI_TalonSRX flTalon = new WPI_TalonSRX(RobotMap.flTalon);
-  WPI_TalonSRX mechTalon1 = new WPI_TalonSRX(RobotMap.mechTalon1);
-  WPI_TalonSRX mechTalon2 = new WPI_TalonSRX(RobotMap.mechTalon2);
+  WPI_TalonSRX armTalon = new WPI_TalonSRX(RobotMap.cargoarmTalon);
+  WPI_TalonSRX cargomechTalon1 = new WPI_TalonSRX(RobotMap.cargomechTalon1);
+  WPI_TalonSRX cargomechTalon2 = new WPI_TalonSRX(RobotMap.cargomechTalon2);
 
-  Solenoid climberbreak = new Solenoid(7); // change this when we know which port
+  Solenoid brake = new Solenoid(7); // change this when we know which port
+
+  int finalPositionCounter = 0;
 
   public void CargoInit() {
-    // double intake = JoystickButton(1);
-    // double deliver = JoystickButton(4);
 
-    flTalon.setInverted(false);
+    armTalon.setInverted(false);
 
-    mechTalon1.setInverted(true);
-    mechTalon2.setInverted(false);
+    cargomechTalon1.setInverted(true);
+    cargomechTalon2.setInverted(false);
 
-    flTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-    flTalon.setSelectedSensorPosition(0);
+    cargomechTalon2.follow(cargomechTalon1);
 
-    flTalon.config_kP(0, .1);
-    flTalon.config_kI(0, 0);
-    flTalon.config_kD(0, 0);
-    flTalon.config_kF(0, 0);
+    armTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+    armTalon.setSelectedSensorPosition(1024); // 90 degrees
 
-    flTalon.setSensorPhase(true);
+    armTalon.config_kP(0, .1);
+    armTalon.config_kI(0, 0);
+    armTalon.config_kD(0, 0);
+    armTalon.config_kF(0, 0);
+
+    armTalon.setSensorPhase(true);
   }
 
-  public void level2() {
-    int position = flTalon.getSelectedSensorPosition();
-    double angle = (double) position * 4096.0 / 360.0;
-    if (angle > 49.1446) {
-      flTalon.set(.6);
-    }
-    else if (angle < 49.1446) {
-      flTalon.set(-.6);
-    }
+  public void setArmAngle(double angle) {
+    brake.set(false);
+    armTalon.set(ControlMode.Position, (angle * 4096 / 360.0));
+    int error = armTalon.getClosedLoopError();
+
+    if (error < 34)
+      finalPositionCounter++;
+    else
+      finalPositionCounter = 0;
   }
 
-  public void level3() {
-    flTalon.set(ControlMode.Position, (60.107*360.0/4096.0));
+  public boolean isArmAtPosition() {
+    if (finalPositionCounter > 5)
+      return true;
+    else
+      return false;
   }
 
-  public void cargobreak() {
-    climberbreak.set(true);
+  public void cargobrake() {
+    finalPositionCounter = 0;
+    armTalon.set(ControlMode.PercentOutput, 0);
+    brake.set(true);
   }
 
   public void up() {
-    flTalon.set(1);
+    armTalon.set(1);
   }
 
   public void down() {
-    flTalon.set(-1);
+    armTalon.set(-1);
   }
 
   public void intake() {
-    mechTalon1.set(-1);
-    mechTalon2.set(-1);
+    cargomechTalon1.set(-1);
+    cargomechTalon2.set(-1);
 
   }
 
   public void deliver() {
-    mechTalon1.set(1);
-    mechTalon2.set(1);
+    cargomechTalon1.set(1);
+    cargomechTalon2.set(1);
   }
 
   public void stop() {
-    mechTalon1.set(0);
-    mechTalon2.set(0);
-    flTalon.set(0);
+    cargomechTalon1.set(0);
+    cargomechTalon2.set(0);
+    armTalon.set(0);
   }
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
     setDefaultCommand(new CargoStop());
   }
 }

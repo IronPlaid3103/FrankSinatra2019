@@ -9,11 +9,10 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
-public class CargoBreak extends Command {
-  public CargoBreak() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class CargoArmLevel1 extends Command {
+  public CargoArmLevel1() {
     requires(Robot.cargo);
   }
 
@@ -25,19 +24,19 @@ public class CargoBreak extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //TODO: add a timer child
-    Robot.cargo.cargobreak();
+    Robot.cargo.setArmAngle(RobotMap.cargoLevel1); 
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.cargo.isArmAtPosition();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.cargo.cargobrake();
   }
 
   // Called when another command which requires one or more of the same

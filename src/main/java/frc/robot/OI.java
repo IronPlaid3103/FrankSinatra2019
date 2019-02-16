@@ -31,6 +31,9 @@ public class OI {
   public Joystick returnJoystickDrive() {
     return driver;
   }
+  public Joystick returnJoystickCommand(){
+    return command;
+  }
 
   public OI() {
 
