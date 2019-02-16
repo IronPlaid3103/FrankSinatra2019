@@ -28,10 +28,15 @@ public class RobotMap {
   public static int flDrive = 3;
   public static int brDrive = 2;
   public static int blDrive = 4;
-  public static int backTalon = 5;
-  public static int frTalon = 6;
-  public static int flTalon = 7;
-  public static int mechTalon1;
-  public static int mechTalon2;
+ 
+  public static int cargoarmTalon = 6;
+
+  public static int cargomechTalon1;
+  public static int cargomechTalon2;
+
+  public static double cargoPark = 0.0;
+  public static double cargoLevel1 = 0.0; //still needs to be calculated
+  public static double cargoLevel2 = 49.1446;
+  public static double cargoLevel3  = 60.107;
 
 }

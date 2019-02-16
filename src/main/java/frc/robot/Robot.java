@@ -20,6 +20,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.CargoArmBreak;
+import frc.robot.commands.CargoArmLevel1;
+import frc.robot.commands.CargoArmLevel2;
+import frc.robot.commands.CargoArmLevel3;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Cargo;
@@ -130,6 +134,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    int pov = m_oi.returnJoystickCommand().getPOV();
+    switch(pov) {
+      case 0: Scheduler.getInstance().add(new CargoArmLevel3()); break;
+      case 90: Scheduler.getInstance().add(new CargoArmLevel2()); break;
+      case 180: Scheduler.getInstance().add(new CargoArmLevel1()); break;
+      case 270: Scheduler.getInstance().add(new CargoArmBreak()); break;
+     }
+
     Scheduler.getInstance().run();
   }
 
