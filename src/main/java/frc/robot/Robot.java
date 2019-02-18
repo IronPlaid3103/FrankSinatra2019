@@ -113,7 +113,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    int pov = m_oi.returnJoystickCommand().getPOV();
+    int pov = m_oi.returnJoystickOperator().getPOV();
     switch (pov) {
       case 0:   Scheduler.getInstance().add(new CargoArmLevel3()); break;
       case 90:  Scheduler.getInstance().add(new CargoArmLevel2()); break;

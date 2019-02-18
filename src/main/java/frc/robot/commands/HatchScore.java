@@ -12,8 +12,6 @@ import frc.robot.Robot;
 
 public class HatchScore extends Command {
   public HatchScore() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.hatch);
   }
 
