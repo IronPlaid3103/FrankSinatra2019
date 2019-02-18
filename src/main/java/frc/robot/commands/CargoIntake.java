@@ -12,8 +12,6 @@ import frc.robot.Robot;
 
 public class CargoIntake extends Command {
   public CargoIntake() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.cargo);
   }
 
@@ -31,17 +29,19 @@ public class CargoIntake extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.cargo.holdingCargo();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+     Robot.cargo.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.cargo.stop();
   }
 }

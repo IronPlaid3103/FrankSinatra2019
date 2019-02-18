@@ -14,7 +14,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.CargoStop;
 
@@ -22,34 +21,41 @@ import frc.robot.commands.CargoStop;
  * Add your docs here.
  */
 public class Cargo extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-  WPI_TalonSRX armTalon = new WPI_TalonSRX(RobotMap.cargoarmTalon);
+
+  WPI_TalonSRX armTalon1 = new WPI_TalonSRX(RobotMap.cargoarmTalon1);
+  WPI_TalonSRX armTalon2 = new WPI_TalonSRX(RobotMap.cargoarmTalon2);
   WPI_TalonSRX cargomechTalon1 = new WPI_TalonSRX(RobotMap.cargomechTalon1);
   WPI_TalonSRX cargomechTalon2 = new WPI_TalonSRX(RobotMap.cargomechTalon2);
 
-  Solenoid brake = new Solenoid(7); // change this when we know which port
+  Solenoid brake = new Solenoid(RobotMap.cargoBrakeSolenoid);
 
   //https://www.chiefdelphi.com/t/talonsrx-isfinished-for-close-loop-control/340082
   int finalPositionCounter = 0;
+  int intakeHoldCounter = 0;
+
+  int intakeRampCounter = 0;
+
+  double maxCurrent = 0;
 
   public Cargo() {
+    armTalon1.setInverted(false);
 
-    armTalon.setInverted(false);
-
-    armTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-    armTalon.setSelectedSensorPosition(1024); // 90 degrees
+    armTalon1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+    armTalon1.setSelectedSensorPosition(1024); // 90 degrees
 
     //https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html
     //TODO: instead of setting these here first, tune them using Phoenix Tuner, then set here in code using those values
-    armTalon.config_kP(0, .1);
-    armTalon.config_kI(0, 0);
-    armTalon.config_kD(0, 0);
-    armTalon.config_kF(0, 0);
+    //NOTE: These are saved directly on the Talon and remain there even after power off - need to be adjusted by code or Phoenix Tuner
+    armTalon1.config_kP(0, .1);
+    armTalon1.config_kI(0, 0);
+    armTalon1.config_kD(0, 0);
+    armTalon1.config_kF(0, 0);
 
-    armTalon.setSensorPhase(true);
+    armTalon1.setSensorPhase(true);
 
-    armTalon.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
+    armTalon1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
+
+    armTalon2.follow(armTalon1);
 
     cargomechTalon1.setInverted(true);
     cargomechTalon2.setInverted(false);
@@ -59,13 +65,10 @@ public class Cargo extends Subsystem {
 
   public void setArmAngle(double angle) {
     brake.set(false);
-    armTalon.set(ControlMode.Position, (angle * 4096.0 / 360.0));
-    int error = armTalon.getClosedLoopError();
+    armTalon1.set(ControlMode.Position, (angle * 4096.0 / 360.0));
+    int error = armTalon1.getClosedLoopError();
 
-    //TODO: 34 encoder units is roughly equal to 3 degrees, so this allows for a threshold of +/- 3 degrees off target
-    //      >> adjust this if necessary, setting to appropriate *encoder units*
-    //      https://www.ctr-electronics.com/downloads/api/java/html/classcom_1_1ctre_1_1phoenix_1_1motorcontrol_1_1can_1_1_base_motor_controller.html#a64275de55a2c1012d6a2935b9a7b0938
-    if (error < 34)
+    if (error < RobotMap.cargoArmAngleTolerance * 4096.0 / 360.0)
       finalPositionCounter++;
     else
       finalPositionCounter = 0; // reset if we went pass the threshold
@@ -81,33 +84,57 @@ public class Cargo extends Subsystem {
 
   public void cargobrake() {
     finalPositionCounter = 0;
-    armTalon.set(ControlMode.PercentOutput, 0);
+    armTalon1.set(ControlMode.PercentOutput, 0);
     brake.set(true);
   }
 
   public void up() {
-    armTalon.set(1);
+    brake.set(false);
+    armTalon1.set(ControlMode.PercentOutput, 1);
   }
 
   public void down() {
-    armTalon.set(-1);
+    brake.set(false);
+    armTalon1.set(ControlMode.PercentOutput, -1);
   }
 
-  public void intake() {
-    cargomechTalon1.set(-1);
-    cargomechTalon2.set(-1);
 
+  public void intake() {
+    cargomechTalon1.set(ControlMode.PercentOutput, -1);
+    
+    //TODO: we may want to track current from both talons - maybe do an OR condition and increment holdCounter if either one is above threshold (I don't think we want an AND condition)
+    double current = cargomechTalon1.getOutputCurrent();
+    //TODO: current and/or rampCounter thresholds may need to be adjusted after real world testing with the cargo grabber installed on a real bot
+    if(current > 7.0 && intakeRampCounter > 25)
+      intakeHoldCounter++;
+    else
+      intakeHoldCounter = 0;
+
+    if(current > maxCurrent) {
+      maxCurrent = current;
+    }
+
+    intakeRampCounter++;
+  }
+
+  public boolean holdingCargo() {
+    //TODO: holdCounter may need to be adjusted after real world testing - increasing will wait longer after we think we have the cargo
+    if(intakeHoldCounter > 5)
+      return true;
+    else {
+      return false;
+    }
   }
 
   public void deliver() {
-    cargomechTalon1.set(1);
-    cargomechTalon2.set(1);
+    cargomechTalon1.set(ControlMode.PercentOutput, 1);
   }
 
   public void stop() {
-    cargomechTalon1.set(0);
-    cargomechTalon2.set(0);
-    armTalon.set(0);
+    cargomechTalon1.set(ControlMode.PercentOutput, 0);
+    armTalon1.set(ControlMode.PercentOutput, 0);
+    intakeHoldCounter = 0;
+    intakeRampCounter = 0;
   }
 
   @Override
