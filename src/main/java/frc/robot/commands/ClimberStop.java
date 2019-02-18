@@ -12,8 +12,6 @@ import frc.robot.Robot;
 
 public class ClimberStop extends Command {
   public ClimberStop() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.climber);
   }
 

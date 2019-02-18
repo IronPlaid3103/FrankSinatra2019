@@ -12,8 +12,6 @@ import frc.robot.Robot;
 
 public class HatchRetrieve extends Command {
   public HatchRetrieve() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.hatch);
   }
 

@@ -12,8 +12,6 @@ import frc.robot.Robot;
 
 public class HatchReset extends Command {
   public HatchReset() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.hatch);
   }
 
