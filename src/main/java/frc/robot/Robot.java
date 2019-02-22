@@ -25,6 +25,7 @@ public class Robot extends TimedRobot {
   public static Hatch hatch;// = new Hatch();
   public static Cargo cargo;// = new Cargo();
   public static Climber climber;
+  public static Camera camera;
 
   /**
    * This function is run when the robot is first started up and should be used
