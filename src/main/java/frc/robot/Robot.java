@@ -52,8 +52,14 @@ public class Robot extends TimedRobot {
       System.out.println("Failed Create Cargo");
     }
 
+    try {
+      camera = new Camera();
+    } catch (Exception ex) {
+      System.out.println("Failed Create Camera");
+    }
+
     kopchassis.configDrive();
-    // camera = new Camera();
+
     m_oi = new OI();
     // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
@@ -116,10 +122,18 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     int pov = m_oi.returnJoystickOperator().getPOV();
     switch (pov) {
-      case 0:   Scheduler.getInstance().add(new CargoArmLevel3()); break;
-      case 90:  Scheduler.getInstance().add(new CargoArmLevel2()); break;
-      case 180: Scheduler.getInstance().add(new CargoArmLevel1()); break;
-      case 270: Scheduler.getInstance().add(new CargoArmPark()); break;
+    case 0:
+      Scheduler.getInstance().add(new CargoArmLevel3());
+      break;
+    case 90:
+      Scheduler.getInstance().add(new CargoArmLevel2());
+      break;
+    case 180:
+      Scheduler.getInstance().add(new CargoArmLevel1());
+      break;
+    case 270:
+      Scheduler.getInstance().add(new CargoArmPark());
+      break;
     }
 
     Scheduler.getInstance().run();

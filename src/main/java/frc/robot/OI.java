@@ -35,6 +35,9 @@ public class OI {
     ClimberGo.whileHeld(new ClimberGo());
     ClimberStop.whileHeld(new ClimberStop());
 
+    Button CameraSwitch = new JoystickButton(driver, ControllerMap.BUMPER_LEFT);
+    CameraSwitch.whenPressed(new SwitchCamera());
+
     // ####### OPERATOR COMMANDS #######
     Button HatchRetrieve = new JoystickButton(operator, ControllerMap.B);
     Button HatchScore = new JoystickButton(operator, ControllerMap.X);

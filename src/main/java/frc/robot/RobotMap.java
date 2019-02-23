@@ -15,16 +15,16 @@ package frc.robot;
  */
 public class RobotMap {
 
-  public static int frDrive = 1;
-  public static int flDrive = 3;
-  public static int brDrive = 2;
-  public static int blDrive = 4;
+  public static int frDrive = 5;
+  public static int flDrive = 7;
+  public static int brDrive = 6;
+  public static int blDrive = 8;
  
-  public static int cargoarmTalon1 = 5;
-  public static int cargoarmTalon2 = 6;
+  public static int cargoarmTalon1 = 1;
+  public static int cargoarmTalon2 = 2;
 
-  public static int cargomechTalon1 = 7;
-  public static int cargomechTalon2 = 8;
+  public static int cargomechTalon1 = 3;
+  public static int cargomechTalon2 = 4;
 
   public static double cargoPark = 90.0;
   public static double cargoLevel1 = 30.0; //TODO: still needs to be calculated
