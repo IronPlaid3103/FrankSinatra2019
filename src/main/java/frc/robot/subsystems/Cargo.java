@@ -40,8 +40,7 @@ public class Cargo extends Subsystem {
   public Cargo() {
     armTalon1.setInverted(false);
 
-    armTalon1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-    armTalon1.setSelectedSensorPosition(1024); // 90 degrees
+    armTalon1.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 10);
 
     //https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html
     //TODO: instead of setting these here first, tune them using Phoenix Tuner, then set here in code using those values
@@ -65,10 +64,10 @@ public class Cargo extends Subsystem {
 
   public void setArmAngle(double angle) {
     brake.set(false);
-    armTalon1.set(ControlMode.Position, (angle * 4096.0 / 360.0));
+    armTalon1.set(ControlMode.Position, (angle * 1024.0 / 360.0));
     int error = armTalon1.getClosedLoopError();
 
-    if (error < RobotMap.cargoArmAngleTolerance * 4096.0 / 360.0)
+    if (error < RobotMap.cargoArmAngleTolerance * 1024.0 / 360.0)
       finalPositionCounter++;
     else
       finalPositionCounter = 0; // reset if we went pass the threshold
