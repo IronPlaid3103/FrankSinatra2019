@@ -60,6 +60,11 @@ public class Cargo extends Subsystem {
     cargomechTalon2.setInverted(false);
 
     cargomechTalon2.follow(cargomechTalon1);
+
+    // TODO
+    // armTalon1.enableCurrentLimit(true);
+    // armTalon1.configContinuousCurrentLimit(RobotMap.cargoContinuousCurrent, 10);
+    // armTalon1.configPeakCurrentLimit(RobotMap.cargoPeakArmCurrent);
   }
 
   public void setArmAngle(double angle) {
@@ -97,14 +102,13 @@ public class Cargo extends Subsystem {
     armTalon1.set(ControlMode.PercentOutput, -1);
   }
 
-
   public void intake() {
     cargomechTalon1.set(ControlMode.PercentOutput, -1);
     
     //TODO: we may want to track current from both talons - maybe do an OR condition and increment holdCounter if either one is above threshold (I don't think we want an AND condition)
     double current = cargomechTalon1.getOutputCurrent();
     //TODO: current and/or rampCounter thresholds may need to be adjusted after real world testing with the cargo grabber installed on a real bot
-    if(current > 7.0 && intakeRampCounter > 25)
+    if(current > 6.0 && intakeRampCounter > 25)
       intakeHoldCounter++;
     else
       intakeHoldCounter = 0;

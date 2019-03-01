@@ -64,11 +64,11 @@ public class Camera extends Subsystem {
     showFrontCamera = !showFrontCamera;
     if(showFrontCamera) {
       videoSink.setSource(frontCamera);
-      SmartDashboard.putString("camera","front");
+      SmartDashboard.putString("Camera","FRONT");
     }
     else {
       videoSink.setSource(backCamera);
-      SmartDashboard.putString("camera","back");
+      SmartDashboard.putString("Camera","BACK");
     }
   }
   

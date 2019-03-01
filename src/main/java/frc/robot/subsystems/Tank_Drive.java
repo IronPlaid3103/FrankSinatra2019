@@ -36,6 +36,15 @@ public class Tank_Drive extends Subsystem {
     brDrive.setInverted(false);
 
     kopdrive.setDeadband(0.1);
+
+    // TODO: set up encoders for the two Talons into which the encoders are connected (i.e. repeat this code twice)
+    // frDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    // frDrive.setSelectedSensorPosition(0);
+    // frDrive.setSensorPhase(true);
+    // frDrive.config_kP(0, 0.1);
+    // frDrive.config_kI(0, 0);
+    // frDrive.config_kD(0, 0);
+    // frDrive.config_kF(0, 0);
   }
 
   public void teleopDrive(Joystick driveControl) {

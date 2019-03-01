@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -22,8 +23,8 @@ import frc.robot.subsystems.*;
 public class Robot extends TimedRobot {
   public static OI m_oi;
   public static Tank_Drive kopchassis = new Tank_Drive();
-  public static Hatch hatch;// = new Hatch();
-  public static Cargo cargo;// = new Cargo();
+  public static Hatch hatch;
+  public static Cargo cargo;
   public static Climber climber;
   public static Camera camera;
 
@@ -61,10 +62,6 @@ public class Robot extends TimedRobot {
     kopchassis.configDrive();
 
     m_oi = new OI();
-    // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
-    // chooser.addOption("My Auto", new MyAutoCommand());
-    // SmartDashboard.putData("Auto mode", m_chooser);
-
   }
 
   /**
@@ -121,7 +118,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     if (m_oi.operator != null) {
-      System.out.println("****** OPERATOR JOYSTICK IS NOT NULL *********");
       int pov = m_oi.operator.getPOV();
       switch (pov) {
       case 0:
@@ -138,6 +134,8 @@ public class Robot extends TimedRobot {
         break;
       }
     }
+    else
+      SmartDashboard.putString("Error - Operator", "OPERATOR JOYSTICK IS NULL - preset levels unavailable");
 
     Scheduler.getInstance().run();
   }
