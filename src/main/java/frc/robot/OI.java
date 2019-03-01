@@ -17,43 +17,41 @@ import frc.robot.commands.*;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-  Joystick driver = new Joystick(ControllerMap.DRIVER_PORT);
-  Joystick operator = new Joystick(ControllerMap.OPERATOR_PORT);
-
-  public Joystick returnJoystickDrive() {
-    return driver;
-  }
-
-  public Joystick returnJoystickOperator() {
-    return operator;
-  }
+  public Joystick driver = new Joystick(ControllerMap.DRIVER_PORT);
+  public Joystick operator = new Joystick(ControllerMap.OPERATOR_PORT);
 
   public OI() {
-    // ###### DRIVER COMMANDS ######
-    Button ClimberGo = new JoystickButton(driver, ControllerMap.A);
-    Button ClimberStop = new JoystickButton(driver, ControllerMap.B);
+    initDriverControls(driver);
+    initOperatorControls(operator);
+  }
+
+  private void initDriverControls(Joystick joystick) {
+    Button ClimberGo = new JoystickButton(joystick, ControllerMap.A);
+    Button ClimberStop = new JoystickButton(joystick, ControllerMap.B);
     ClimberGo.whileHeld(new ClimberGo());
     ClimberStop.whileHeld(new ClimberStop());
 
-    Button CameraSwitch = new JoystickButton(driver, ControllerMap.BUMPER_LEFT);
+    Button CameraSwitch = new JoystickButton(joystick, ControllerMap.BUMPER_LEFT);
     CameraSwitch.whenPressed(new SwitchCamera());
+  }
 
-    // ####### OPERATOR COMMANDS #######
-    Button HatchRetrieve = new JoystickButton(operator, ControllerMap.B);
-    Button HatchScore = new JoystickButton(operator, ControllerMap.X);
+  private void initOperatorControls(Joystick joystick) {
+    Button HatchRetrieve = new JoystickButton(joystick, ControllerMap.B);
+    Button HatchScore = new JoystickButton(joystick, ControllerMap.X);
     HatchRetrieve.whileHeld(new HatchRetrieve());
     HatchScore.whileHeld(new HatchScore());
 
-    Button CargoUp = new JoystickButton(operator, ControllerMap.BUMPER_LEFT);
-    Button CargoDown = new JoystickButton(operator, ControllerMap.BUMPER_RIGHT);
+    Button CargoUp = new JoystickButton(joystick, ControllerMap.BUMPER_LEFT);
+    Button CargoDown = new JoystickButton(joystick, ControllerMap.BUMPER_RIGHT);
     CargoUp.whileHeld(new CargoUp());
     CargoDown.whileHeld(new CargoDown());
 
-    Button CargoIntake = new JoystickButton(driver, ControllerMap.LOGO_LEFT);
-    Button CargoDeliver = new JoystickButton(driver, ControllerMap.LOGO_RIGHT);
+    Button CargoIntake = new JoystickButton(joystick, ControllerMap.LOGO_LEFT);
+    Button CargoDeliver = new JoystickButton(joystick, ControllerMap.LOGO_RIGHT);
     CargoIntake.whenPressed(new CargoIntake());
     CargoDeliver.whileHeld(new CargoDeliver());
   }
+
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a joystick.
   // You create one by telling it which joystick it's on and which button

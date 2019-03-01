@@ -120,20 +120,23 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    int pov = m_oi.returnJoystickOperator().getPOV();
-    switch (pov) {
-    case 0:
-      Scheduler.getInstance().add(new CargoArmLevel3());
-      break;
-    case 90:
-      Scheduler.getInstance().add(new CargoArmLevel2());
-      break;
-    case 180:
-      Scheduler.getInstance().add(new CargoArmLevel1());
-      break;
-    case 270:
-      Scheduler.getInstance().add(new CargoArmPark());
-      break;
+    if (m_oi.operator != null) {
+      System.out.println("****** OPERATOR JOYSTICK IS NOT NULL *********");
+      int pov = m_oi.operator.getPOV();
+      switch (pov) {
+      case 0:
+        Scheduler.getInstance().add(new CargoArmLevel3());
+        break;
+      case 90:
+        Scheduler.getInstance().add(new CargoArmLevel2());
+        break;
+      case 180:
+        Scheduler.getInstance().add(new CargoArmLevel1());
+        break;
+      case 270:
+        Scheduler.getInstance().add(new CargoArmPark());
+        break;
+      }
     }
 
     Scheduler.getInstance().run();
