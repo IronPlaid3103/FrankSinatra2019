@@ -65,6 +65,13 @@ public class Cargo extends Subsystem {
     // armTalon1.enableCurrentLimit(true);
     // armTalon1.configContinuousCurrentLimit(RobotMap.cargoContinuousCurrent, 10);
     // armTalon1.configPeakCurrentLimit(RobotMap.cargoPeakArmCurrent);
+  
+    // armTalon1.configForwardSoftLimitEnable(true);
+    // armTalon1.configForwardSoftLimitThreshold(380); 
+  
+    // armTalon1.configReverseSoftLimitEnable(true);
+    // armTalon1.configReverseSoftLimitThreshold(-80);
+
   }
 
   public void setArmAngle(double angle) {

@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class LimelightFollow extends Command {
+  double lastError = 0;
+  double error_sum = 0;
+
   public LimelightFollow() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -22,6 +25,7 @@ public class LimelightFollow extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    error_sum = 0;
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -29,22 +33,30 @@ public class LimelightFollow extends Command {
   protected void execute() {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
-    NetworkTableEntry ty = table.getEntry("ty");
-    NetworkTableEntry ta = table.getEntry("ta");
 
-    //read values periodically
-    double x = tx.getDouble(0.0);
-    double y = ty.getDouble(0.0);
-    double area = ta.getDouble(0.0);
+    double changeInError = lastError - tx.getDouble(0);
+    error_sum += tx.getDouble(0);
 
-    //post to smart dashboard periodically
-    SmartDashboard.putNumber("LimelightX", x);
-    SmartDashboard.putNumber("LimelightY", y);
-    SmartDashboard.putNumber("LimelightArea", area);
+    // double kp = 0.021;
+    // double ki = 0.0;
+    // double kd = 0.15;
+    double kp = SmartDashboard.getNumber("kP", 0.0);
+    double ki = SmartDashboard.getNumber("kI", 0.0);
+    double kd = SmartDashboard.getNumber("kD", 0.0);
 
-    double kp = 0.025;
-    double output = kp * tx.getDouble(0);
-    Robot.kopchassis.limelightDrive(output);
+    double P = kp * tx.getDouble(0);
+    double I = ki * error_sum;
+    double D = kd * changeInError;
+
+    double output = P + I - D;
+    
+    SmartDashboard.putNumber("output", output);
+    SmartDashboard.putNumber("error", lastError);
+
+   // if(output > 0) output -= 0.1;
+   // else output += 0.1;
+
+    Robot.kopchassis.limelightDrive(Robot.m_oi.driver, output);
   }
 
   // Make this return true when this Command no longer needs to run execute()

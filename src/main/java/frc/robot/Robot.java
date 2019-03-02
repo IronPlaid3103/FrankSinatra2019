@@ -62,6 +62,10 @@ public class Robot extends TimedRobot {
     kopchassis.configDrive();
 
     m_oi = new OI();
+    
+    SmartDashboard.putNumber("kP", 0.0);
+    SmartDashboard.putNumber("kI", 0.0);
+    SmartDashboard.putNumber("kD", 0.0);
   }
 
   /**

@@ -59,6 +59,8 @@ public class Tank_Drive extends Subsystem {
     setDefaultCommand(new ArcadeDrive());
   }
 
-  public void limelightDrive(double output) {
+  public void limelightDrive(Joystick driver, double output) {
+    double forward = driver.getRawAxis(1);
+    kopdrive.arcadeDrive(forward, output);
   }
 }

@@ -26,13 +26,16 @@ public class OI {
   }
 
   private void initDriverControls(Joystick joystick) {
-    Button ClimberGo = new JoystickButton(joystick, ControllerMap.A);
+    Button ClimberGo = new JoystickButton(joystick, ControllerMap.X);
     Button ClimberStop = new JoystickButton(joystick, ControllerMap.B);
     ClimberGo.whileHeld(new ClimberGo());
     ClimberStop.whileHeld(new ClimberStop());
 
     Button CameraSwitch = new JoystickButton(joystick, ControllerMap.BUMPER_LEFT);
     CameraSwitch.whenPressed(new SwitchCamera());
+
+    Button LimelightFollow = new JoystickButton(joystick, ControllerMap.A);
+    LimelightFollow.whileHeld(new LimelightFollow());
   }
 
   private void initOperatorControls(Joystick joystick) {
