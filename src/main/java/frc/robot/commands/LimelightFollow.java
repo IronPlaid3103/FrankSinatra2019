@@ -16,16 +16,35 @@ public class LimelightFollow extends Command {
   double lastError = 0;
   double error_sum = 0;
 
+  double kP = 0.021;
+  double kI = 0.0;
+  double kD = 0.15;
+
   public LimelightFollow() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.kopchassis);
+
+    if (!Robot.preferences.containsKey("Limelight.kP")) {
+      Robot.preferences.putDouble("Limelight.kP", kP);
+    }
+    if (!Robot.preferences.containsKey("Limelight.kI")) {
+      Robot.preferences.putDouble("Limelight.kI", kI);
+    }
+    if (!Robot.preferences.containsKey("Limelight.kD")) {
+      Robot.preferences.putDouble("Limelight.kD", kD);
+    }
+
+    kP = Robot.preferences.getDouble("LimeLight.kP", 0.0);
+    kI = Robot.preferences.getDouble("LimeLight.kI", 0.0);
+    kD = Robot.preferences.getDouble("LimeLight.kD", 0.0);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     error_sum = 0;
+
+    // turn on the Limelight LED
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -33,28 +52,20 @@ public class LimelightFollow extends Command {
   protected void execute() {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
+    double x = tx.getDouble(0);
 
-    double changeInError = lastError - tx.getDouble(0);
-    error_sum += tx.getDouble(0);
+    error_sum += x;
 
-    // double kp = 0.021;
-    // double ki = 0.0;
-    // double kd = 0.15;
-    double kp = SmartDashboard.getNumber("kP", 0.0);
-    double ki = SmartDashboard.getNumber("kI", 0.0);
-    double kd = SmartDashboard.getNumber("kD", 0.0);
+    double P = kP * x;
+    double I = kI * error_sum;
+    double D = kD * (lastError - x);
 
-    double P = kp * tx.getDouble(0);
-    double I = ki * error_sum;
-    double D = kd * changeInError;
+    lastError = x;
 
     double output = P + I - D;
-    
+
     SmartDashboard.putNumber("output", output);
     SmartDashboard.putNumber("error", lastError);
-
-   // if(output > 0) output -= 0.1;
-   // else output += 0.1;
 
     Robot.kopchassis.limelightDrive(Robot.m_oi.driver, output);
   }
@@ -68,11 +79,14 @@ public class LimelightFollow extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    // return the Limelight LED to pipeline default (ENSURE IT'S OFF IN LIMELIGHT CONFIG)
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    super.interrupted();
   }
 }

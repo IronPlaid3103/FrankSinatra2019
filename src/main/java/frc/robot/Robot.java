@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,6 +28,10 @@ public class Robot extends TimedRobot {
   public static Cargo cargo;
   public static Climber climber;
   public static Camera camera;
+  
+  public static Preferences preferences;
+
+  public static boolean toggleDirection = false;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -61,11 +66,13 @@ public class Robot extends TimedRobot {
 
     kopchassis.configDrive();
 
+    preferences = Preferences.getInstance();
+
     m_oi = new OI();
-    
-    SmartDashboard.putNumber("kP", 0.0);
-    SmartDashboard.putNumber("kI", 0.0);
-    SmartDashboard.putNumber("kD", 0.0);
+
+    SmartDashboard.putNumber("kP", preferences.getDouble("Limelight.kP", 0.0));
+    SmartDashboard.putNumber("kI", preferences.getDouble("Limelight.kI", 0.0));
+    SmartDashboard.putNumber("kD", preferences.getDouble("Limelight.kD", 0.0));
   }
 
   /**
@@ -121,7 +128,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    if (m_oi.operator != null) {
+    preferences.putDouble("Limelight.kP", SmartDashboard.getNumber("kP", 0.0));
+    preferences.putDouble("Limelight.kI", SmartDashboard.getNumber("kI", 0.0));
+    preferences.putDouble("Limelight.kD", SmartDashboard.getNumber("kD", 0.0));
+
+    if (!m_oi.operator.getName().equals("")) {
       int pov = m_oi.operator.getPOV();
       switch (pov) {
       case 0:
@@ -138,8 +149,6 @@ public class Robot extends TimedRobot {
         break;
       }
     }
-    else
-      SmartDashboard.putString("Error - Operator", "OPERATOR JOYSTICK IS NULL - preset levels unavailable");
 
     Scheduler.getInstance().run();
   }

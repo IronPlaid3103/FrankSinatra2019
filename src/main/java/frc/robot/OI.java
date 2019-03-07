@@ -26,33 +26,37 @@ public class OI {
   }
 
   private void initDriverControls(Joystick joystick) {
-    Button ClimberGo = new JoystickButton(joystick, ControllerMap.X);
-    Button ClimberStop = new JoystickButton(joystick, ControllerMap.B);
-    ClimberGo.whileHeld(new ClimberGo());
-    ClimberStop.whileHeld(new ClimberStop());
+    if (!joystick.getName().equals("")) {
+      Button ClimberGo = new JoystickButton(joystick, ControllerMap.X);
+      Button ClimberStop = new JoystickButton(joystick, ControllerMap.B);
+      ClimberGo.whileHeld(new ClimberGo());
+      ClimberStop.whileHeld(new ClimberStop());
 
-    Button CameraSwitch = new JoystickButton(joystick, ControllerMap.BUMPER_LEFT);
-    CameraSwitch.whenPressed(new SwitchCamera());
+      Button CameraSwitch = new JoystickButton(joystick, ControllerMap.BUMPER_LEFT);
+      CameraSwitch.whenPressed(new SwitchCamera());
 
-    Button LimelightFollow = new JoystickButton(joystick, ControllerMap.A);
-    LimelightFollow.whileHeld(new LimelightFollow());
+      Button LimelightFollow = new JoystickButton(joystick, ControllerMap.A);
+      LimelightFollow.whileHeld(new LimelightFollow());
+    }
   }
 
   private void initOperatorControls(Joystick joystick) {
-    Button HatchRetrieve = new JoystickButton(joystick, ControllerMap.B);
-    Button HatchScore = new JoystickButton(joystick, ControllerMap.X);
-    HatchRetrieve.whileHeld(new HatchRetrieve());
-    HatchScore.whileHeld(new HatchScore());
+    if (!joystick.getName().equals("")) {
+      Button HatchRetrieve = new JoystickButton(joystick, ControllerMap.B);
+      Button HatchScore = new JoystickButton(joystick, ControllerMap.X);
+      HatchRetrieve.whileHeld(new HatchRetrieve());
+      HatchScore.whileHeld(new HatchScore());
 
-    Button CargoUp = new JoystickButton(joystick, ControllerMap.BUMPER_LEFT);
-    Button CargoDown = new JoystickButton(joystick, ControllerMap.BUMPER_RIGHT);
-    CargoUp.whileHeld(new CargoUp());
-    CargoDown.whileHeld(new CargoDown());
+      Button CargoUp = new JoystickButton(joystick, ControllerMap.BUMPER_LEFT);
+      Button CargoDown = new JoystickButton(joystick, ControllerMap.BUMPER_RIGHT);
+      CargoUp.whileHeld(new CargoUp());
+      CargoDown.whileHeld(new CargoDown());
 
-    Button CargoIntake = new JoystickButton(joystick, ControllerMap.LOGO_LEFT);
-    Button CargoDeliver = new JoystickButton(joystick, ControllerMap.LOGO_RIGHT);
-    CargoIntake.whenPressed(new CargoIntake());
-    CargoDeliver.whileHeld(new CargoDeliver());
+      Button CargoIntake = new JoystickButton(joystick, ControllerMap.LOGO_LEFT);
+      Button CargoDeliver = new JoystickButton(joystick, ControllerMap.LOGO_RIGHT);
+      CargoIntake.whenPressed(new CargoIntake());
+      CargoDeliver.whileHeld(new CargoDeliver());
+    }
   }
 
   //// CREATING BUTTONS
