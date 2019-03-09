@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.CargoStop;
 
@@ -23,7 +24,7 @@ import frc.robot.commands.CargoStop;
 public class Cargo extends Subsystem {
 
   WPI_TalonSRX armTalon1 = new WPI_TalonSRX(RobotMap.cargoarmTalon1);
-  WPI_TalonSRX armTalon2 = new WPI_TalonSRX(RobotMap.cargoarmTalon2);
+  //WPI_TalonSRX armTalon2 = new WPI_TalonSRX(RobotMap.cargoarmTalon2);
   WPI_TalonSRX cargomechTalon1 = new WPI_TalonSRX(RobotMap.cargomechTalon1);
   WPI_TalonSRX cargomechTalon2 = new WPI_TalonSRX(RobotMap.cargomechTalon2);
 
@@ -38,14 +39,14 @@ public class Cargo extends Subsystem {
   double maxCurrent = 0;
 
   public Cargo() {
-    armTalon1.setInverted(false);
+    armTalon1.setInverted(true);
 
     armTalon1.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 10);
 
     //https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html
     //TODO: instead of setting these here first, tune them using Phoenix Tuner, then set here in code using those values
     //NOTE: These are saved directly on the Talon and remain there even after power off - need to be adjusted by code or Phoenix Tuner
-    armTalon1.config_kP(0, .1);
+    armTalon1.config_kP(0, 0);
     armTalon1.config_kI(0, 0);
     armTalon1.config_kD(0, 0);
     armTalon1.config_kF(0, 0);
@@ -54,7 +55,7 @@ public class Cargo extends Subsystem {
 
     armTalon1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
 
-    armTalon2.follow(armTalon1);
+    //armTalon2.follow(armTalon1);
 
     cargomechTalon1.setInverted(true);
     cargomechTalon2.setInverted(false);
@@ -66,11 +67,11 @@ public class Cargo extends Subsystem {
     // armTalon1.configContinuousCurrentLimit(RobotMap.cargoContinuousCurrent, 10);
     // armTalon1.configPeakCurrentLimit(RobotMap.cargoPeakArmCurrent);
   
-    // armTalon1.configForwardSoftLimitEnable(true);
-    // armTalon1.configForwardSoftLimitThreshold(380); 
+     armTalon1.configForwardSoftLimitEnable(true);
+     armTalon1.configForwardSoftLimitThreshold(315); 
   
-    // armTalon1.configReverseSoftLimitEnable(true);
-    // armTalon1.configReverseSoftLimitThreshold(-80);
+     armTalon1.configReverseSoftLimitEnable(true);
+     armTalon1.configReverseSoftLimitThreshold(-60);
 
   }
 
@@ -78,6 +79,9 @@ public class Cargo extends Subsystem {
     brake.set(false);
     armTalon1.set(ControlMode.Position, (angle * 1024.0 / 360.0));
     int error = armTalon1.getClosedLoopError();
+    SmartDashboard.putNumber("angle", angle* 1024.0 / 360.0);
+
+    SmartDashboard.putNumber("error", error); 
 
     if (error < RobotMap.cargoArmAngleTolerance * 1024.0 / 360.0)
       finalPositionCounter++;
@@ -101,12 +105,12 @@ public class Cargo extends Subsystem {
 
   public void up() {
     brake.set(false);
-    armTalon1.set(ControlMode.PercentOutput, 1);
+    armTalon1.set(ControlMode.PercentOutput, -1);
   }
 
   public void down() {
     brake.set(false);
-    armTalon1.set(ControlMode.PercentOutput, -1);
+    armTalon1.set(ControlMode.PercentOutput, 1);
   }
 
   public void intake() {

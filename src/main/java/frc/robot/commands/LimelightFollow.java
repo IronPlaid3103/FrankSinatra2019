@@ -15,6 +15,7 @@ import frc.robot.Robot;
 public class LimelightFollow extends Command {
   double lastError = 0;
   double error_sum = 0;
+  double maxOutput = 0;
 
   double kP = 0.021;
   double kI = 0.0;
@@ -62,8 +63,12 @@ public class LimelightFollow extends Command {
 
     lastError = x;
 
-    double output = P + I - D;
 
+    double output = P + I - D;
+    if (output > maxOutput)
+    maxOutput = output;
+    
+    SmartDashboard.putNumber("maxOutput", maxOutput);
     SmartDashboard.putNumber("output", output);
     SmartDashboard.putNumber("error", lastError);
 
