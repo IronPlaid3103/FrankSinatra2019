@@ -7,14 +7,20 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;
 
-public class HatchRetrieve extends Command {
-  public HatchRetrieve() {
-    requires(Robot.hatch);
+/**
+ * Add your docs here.
+ */
+public class DriverRumble extends TimedCommand {
+  /**
+   * Add your docs here.
+   */
+  public DriverRumble(double timeout) {
+    super(timeout);
+    
   }
 
   // Called just before this Command runs the first time
@@ -25,19 +31,13 @@ public class HatchRetrieve extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.hatch.retrieve();
+    Robot.m_oi.driver.setRumble(RumbleType.kRightRumble, 1.0);
   }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
-
-  // Called once after isFinished returns true
+  // Called once after timeout
   @Override
   protected void end() {
-    Scheduler.getInstance().add(new DriverRumble(0.3));
+    Robot.m_oi.driver.setRumble(RumbleType.kRightRumble, 0);
   }
 
   // Called when another command which requires one or more of the same
