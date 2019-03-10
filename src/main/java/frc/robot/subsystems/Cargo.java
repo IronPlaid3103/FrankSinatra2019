@@ -36,12 +36,11 @@ public class Cargo extends Subsystem {
 
   int intakeRampCounter = 0;
 
-  double maxCurrent = 0;
-
   public Cargo() {
     armTalon1.setInverted(true);
 
     armTalon1.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 10);
+    armTalon1.setSensorPhase(true);
 
     //https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html
     //TODO: instead of setting these here first, tune them using Phoenix Tuner, then set here in code using those values
@@ -51,36 +50,33 @@ public class Cargo extends Subsystem {
     armTalon1.config_kD(0, 0);
     armTalon1.config_kF(0, 0);
 
-    armTalon1.setSensorPhase(true);
+    // armTalon1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
 
-    armTalon1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
-
-    //armTalon2.follow(armTalon1);
-
-    cargomechTalon1.setInverted(true);
-    cargomechTalon2.setInverted(false);
-
-    cargomechTalon2.follow(cargomechTalon1);
+    // armTalon2.follow(armTalon1);
 
     // TODO
     // armTalon1.enableCurrentLimit(true);
     // armTalon1.configContinuousCurrentLimit(RobotMap.cargoContinuousCurrent, 10);
     // armTalon1.configPeakCurrentLimit(RobotMap.cargoPeakArmCurrent);
   
-     armTalon1.configForwardSoftLimitEnable(true);
-     armTalon1.configForwardSoftLimitThreshold(315); 
+    armTalon1.configForwardSoftLimitEnable(true);
+    armTalon1.configForwardSoftLimitThreshold(315);
   
-     armTalon1.configReverseSoftLimitEnable(true);
-     armTalon1.configReverseSoftLimitThreshold(-60);
+    armTalon1.configReverseSoftLimitEnable(true);
+    armTalon1.configReverseSoftLimitThreshold(-60);
 
+    cargomechTalon1.setInverted(true);
+    cargomechTalon2.setInverted(false);
+
+    cargomechTalon2.follow(cargomechTalon1);
   }
 
   public void setArmAngle(double angle) {
     brake.set(false);
     armTalon1.set(ControlMode.Position, (angle * 1024.0 / 360.0));
     int error = armTalon1.getClosedLoopError();
-    SmartDashboard.putNumber("angle", angle* 1024.0 / 360.0);
 
+    SmartDashboard.putNumber("target position", angle* 1024.0 / 360.0);
     SmartDashboard.putNumber("error", error); 
 
     if (error < RobotMap.cargoArmAngleTolerance * 1024.0 / 360.0)
@@ -123,10 +119,6 @@ public class Cargo extends Subsystem {
       intakeHoldCounter++;
     else
       intakeHoldCounter = 0;
-
-    if(current > maxCurrent) {
-      maxCurrent = current;
-    }
 
     intakeRampCounter++;
   }

@@ -26,6 +26,8 @@ public class RobotMap {
   public static int cargomechTalon1 = 3;
   public static int cargomechTalon2 = 4;
 
+  public static double cargoGrabberCurrentLimit = 7.0;
+
   public static double cargoPark = 90.0;
   public static double cargoLevel1 = 30.0; //TODO: still needs to be calculated
   public static double cargoLevel2 = 49.1446;
