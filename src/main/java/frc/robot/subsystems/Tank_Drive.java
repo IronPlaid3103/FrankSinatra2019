@@ -51,6 +51,11 @@ public class Tank_Drive extends Subsystem {
     double forward = driveControl.getRawAxis(1);
     double turn = driveControl.getRawAxis(4);
 
+    //TODO: If we want to toggle the driving behavior when the camera has toggled, this would do it
+    // if(Robot.toggleDirection) {
+    // forward = -forward;
+    // }
+
     kopdrive.arcadeDrive(forward, turn);
   }
 

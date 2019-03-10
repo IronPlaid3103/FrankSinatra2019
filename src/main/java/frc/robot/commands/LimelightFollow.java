@@ -15,6 +15,7 @@ import frc.robot.Robot;
 public class LimelightFollow extends Command {
   double lastError = 0;
   double error_sum = 0;
+
   double maxOutput = 0;
 
   double kP = 0.021;
@@ -34,9 +35,9 @@ public class LimelightFollow extends Command {
       Robot.preferences.putDouble("Limelight.kD", kD);
     }
 
-    kP = Robot.preferences.getDouble("LimeLight.kP", 0.0);
-    kI = Robot.preferences.getDouble("LimeLight.kI", 0.0);
-    kD = Robot.preferences.getDouble("LimeLight.kD", 0.0);
+    kP = Robot.preferences.getDouble("Limelight.kP", 0.0);
+    kI = Robot.preferences.getDouble("Limelight.kI", 0.0);
+    kD = Robot.preferences.getDouble("Limelight.kD", 0.0);
   }
 
   // Called just before this Command runs the first time
@@ -63,11 +64,10 @@ public class LimelightFollow extends Command {
 
     lastError = x;
 
-
     double output = P + I - D;
+
     if (output > maxOutput)
-    maxOutput = output;
-    
+      maxOutput = output;
     SmartDashboard.putNumber("maxOutput", maxOutput);
     SmartDashboard.putNumber("output", output);
     SmartDashboard.putNumber("error", lastError);
