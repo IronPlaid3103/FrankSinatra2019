@@ -45,7 +45,7 @@ public class Cargo extends Subsystem {
     //https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html
     //TODO: instead of setting these here first, tune them using Phoenix Tuner, then set here in code using those values
     //NOTE: These are saved directly on the Talon and remain there even after power off - need to be adjusted by code or Phoenix Tuner
-    armTalon1.config_kP(0, 0);
+    armTalon1.config_kP(0, 1);
     armTalon1.config_kI(0, 0);
     armTalon1.config_kD(0, 0);
     armTalon1.config_kF(0, 0);
