@@ -132,6 +132,8 @@ public class Robot extends TimedRobot {
     preferences.putDouble("Limelight.kI", SmartDashboard.getNumber("kI", 0.0));
     preferences.putDouble("Limelight.kD", SmartDashboard.getNumber("kD", 0.0));
 
+    SmartDashboard.putNumber("Cargo Angle", cargo.getArmAngle());
+
     if (!m_oi.operator.getName().equals("")) {
       int pov = m_oi.operator.getPOV();
       switch (pov) {

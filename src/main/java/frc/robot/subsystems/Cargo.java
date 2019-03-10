@@ -60,10 +60,10 @@ public class Cargo extends Subsystem {
     // armTalon1.configPeakCurrentLimit(RobotMap.cargoPeakArmCurrent);
   
     armTalon1.configForwardSoftLimitEnable(true);
-    armTalon1.configForwardSoftLimitThreshold(315);
+    armTalon1.configForwardSoftLimitThreshold(290);
   
     armTalon1.configReverseSoftLimitEnable(true);
-    armTalon1.configReverseSoftLimitThreshold(-60);
+    armTalon1.configReverseSoftLimitThreshold(0);
 
     cargomechTalon1.setInverted(true);
     cargomechTalon2.setInverted(false);
@@ -85,6 +85,10 @@ public class Cargo extends Subsystem {
       finalPositionCounter = 0; // reset if we went pass the threshold
   }
 
+  public double getArmAngle() {
+    return armTalon1.getSelectedSensorPosition() * 360.0 / 1024.0;
+  }
+
   public boolean isArmAtPosition() {
     //TODO: determine if this is a sufficient number of counts/loops (5 ~= 100ms)
     if (finalPositionCounter > 5)
@@ -101,12 +105,12 @@ public class Cargo extends Subsystem {
 
   public void up() {
     brake.set(false);
-    armTalon1.set(ControlMode.PercentOutput, -1);
+    armTalon1.set(ControlMode.PercentOutput, 1);
   }
 
   public void down() {
     brake.set(false);
-    armTalon1.set(ControlMode.PercentOutput, 1);
+    armTalon1.set(ControlMode.PercentOutput, -1);
   }
 
   public void intake() {
