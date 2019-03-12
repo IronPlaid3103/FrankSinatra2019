@@ -39,6 +39,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    preferences = Preferences.getInstance();
 
     try {
       hatch = new Hatch();
@@ -66,13 +67,15 @@ public class Robot extends TimedRobot {
 
     kopchassis.configDrive();
 
-    preferences = Preferences.getInstance();
-
     m_oi = new OI();
 
     SmartDashboard.putNumber("kP", preferences.getDouble("Limelight.kP", 0.0));
     SmartDashboard.putNumber("kI", preferences.getDouble("Limelight.kI", 0.0));
     SmartDashboard.putNumber("kD", preferences.getDouble("Limelight.kD", 0.0));
+
+    SmartDashboard.putNumber("CargokP", preferences.getDouble("CargoArm.kP", 0.0));
+    SmartDashboard.putNumber("CargokI", preferences.getDouble("CargoArm.kI", 0.0));
+    SmartDashboard.putNumber("CargokD", preferences.getDouble("CargoArm.kD", 0.0));
   }
 
   /**
@@ -127,30 +130,34 @@ public class Robot extends TimedRobot {
    * This function is called periodically during operator control.
    */
   @Override
-  public void teleopPeriodic() {
+  public void teleopPeriodic() { 
     preferences.putDouble("Limelight.kP", SmartDashboard.getNumber("kP", 0.0));
     preferences.putDouble("Limelight.kI", SmartDashboard.getNumber("kI", 0.0));
     preferences.putDouble("Limelight.kD", SmartDashboard.getNumber("kD", 0.0));
 
+    preferences.putDouble("CargoArm.kP", SmartDashboard.getNumber("CargokP", 0.0));
+    preferences.putDouble("CargoArm.kI", SmartDashboard.getNumber("CargokI", 0.0));
+    preferences.putDouble("CargoArm.kD", SmartDashboard.getNumber("CargokD", 0.0));
+
     SmartDashboard.putNumber("Cargo Angle", cargo.getArmAngle());
 
-    if (!m_oi.operator.getName().equals("")) {
-      int pov = m_oi.operator.getPOV();
-      switch (pov) {
-      case 0:
-        Scheduler.getInstance().add(new CargoArmLevel3());
-        break;
-      case 90:
-        Scheduler.getInstance().add(new CargoArmLevel2());
-        break;
-      case 180:
-        Scheduler.getInstance().add(new CargoArmLevel1());
-        break;
-      case 270:
-        Scheduler.getInstance().add(new CargoArmPark());
-        break;
-      }
-    }
+    // if (!m_oi.operator.getName().equals("")) {
+    //   int pov = m_oi.operator.getPOV();
+    //   switch (pov) {
+    //   case 0:
+    //     Scheduler.getInstance().add(new CargoArmLevel3());
+    //     break;
+    //   case 90:
+    //     Scheduler.getInstance().add(new CargoArmLevel2());
+    //     break;
+    //   //case 180:
+    //     //Scheduler.getInstance().add(new CargoArmLevel1());
+    //     //break;
+    //   case 270:
+    //     Scheduler.getInstance().add(new CargoArmPark());
+    //     break;
+    //   }
+    // }
 
     Scheduler.getInstance().run();
   }

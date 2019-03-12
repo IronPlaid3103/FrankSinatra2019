@@ -49,8 +49,10 @@ public class OI {
 
       Button CargoUp = new JoystickButton(joystick, ControllerMap.BUMPER_LEFT);
       Button CargoDown = new JoystickButton(joystick, ControllerMap.BUMPER_RIGHT);
+      Button CargoLevel1 = new JoystickButton(joystick, ControllerMap.Y);
       CargoUp.whileHeld(new CargoUp());
       CargoDown.whileHeld(new CargoDown());
+      CargoLevel1.whenPressed(new CargoArmLevel1());
 
       Button CargoIntake = new JoystickButton(joystick, ControllerMap.LOGO_LEFT);
       Button CargoDeliver = new JoystickButton(joystick, ControllerMap.LOGO_RIGHT);

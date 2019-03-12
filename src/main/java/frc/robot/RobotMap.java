@@ -21,7 +21,7 @@ public class RobotMap {
   public static int blDrive = 8;
  
   public static int cargoarmTalon1 = 1;
-  public static int cargoarmTalon2 = 2;
+  //public static int cargoarmTalon2 = 2; only one talon is being used for cargo arm 
 
   public static int cargomechTalon1 = 3;
   public static int cargomechTalon2 = 4;
@@ -29,7 +29,7 @@ public class RobotMap {
   public static double cargoGrabberCurrentLimit = 7.0;
 
   public static double cargoPark = 90.0;
-  public static double cargoLevel1 = 30.0; //TODO: still needs to be calculated
+  public static double cargoLevel1 = 75; //TODO: still needs to be calculated
   public static double cargoLevel2 = 49.1446;
   public static double cargoLevel3  = 60.107;
   public static double cargoArmIntake;  //TODO: do we need a special angle for intake?
