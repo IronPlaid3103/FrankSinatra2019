@@ -127,12 +127,12 @@ public class Cargo extends Subsystem {
 
   public void up() {
     brake.set(false);
-    armTalon1.set(ControlMode.PercentOutput, 1);
+    armTalon1.set(ControlMode.PercentOutput, 0.5);
   }
 
   public void down() {
     brake.set(false);
-    armTalon1.set(ControlMode.PercentOutput, -1);
+    armTalon1.set(ControlMode.PercentOutput, -0.5);
   }
 
   public void intake() {

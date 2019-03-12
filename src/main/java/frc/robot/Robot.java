@@ -143,6 +143,7 @@ public class Robot extends TimedRobot {
 
     // if (!m_oi.operator.getName().equals("")) {
     //   int pov = m_oi.operator.getPOV();
+    //   SmartDashboard.putNumber("pov", pov);
     //   switch (pov) {
     //   case 0:
     //     Scheduler.getInstance().add(new CargoArmLevel3());
@@ -150,9 +151,9 @@ public class Robot extends TimedRobot {
     //   case 90:
     //     Scheduler.getInstance().add(new CargoArmLevel2());
     //     break;
-    //   //case 180:
-    //     //Scheduler.getInstance().add(new CargoArmLevel1());
-    //     //break;
+    //   case 180:
+    //     Scheduler.getInstance().add(new CargoArmLevel1());
+    //     break;
     //   case 270:
     //     Scheduler.getInstance().add(new CargoArmPark());
     //     break;
