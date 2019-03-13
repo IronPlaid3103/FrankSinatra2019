@@ -33,7 +33,7 @@ public class RobotMap {
   public static double cargoLevel2 = 49.1446;
   public static double cargoLevel3  = 60.107;
   public static double cargoArmIntake = 0.0;  //TODO: do we need a special angle for intake?
-  public static double cargoArmAngleTolerance = 3.0; //TODO: adjust after some real world testing; acceptable tolerance of arm position +/- degrees
+  public static double cargoArmAngleTolerance = 1.5; //TODO: adjust after some real world testing; acceptable tolerance of arm position +/- degrees
 
   public static int hatchPusherSolenoid = 1;
   public static int hatchFingerSolenoid = 3;

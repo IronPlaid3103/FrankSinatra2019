@@ -36,32 +36,6 @@ public class Cargo extends Subsystem {
   int intakeHoldCounter = 0;
 
   int intakeRampCounter = 0;
-  double kP = 20;
-  double kI = 0.0;
-  double kD = 0.0;
-
-  public void init() {
-    if (!Robot.preferences.containsKey("CargoArm.kP")) {
-      Robot.preferences.putDouble("CargoArm.kP", kP);
-    }
-    if (!Robot.preferences.containsKey("CargoArm.kI")) {
-      Robot.preferences.putDouble("CargoArm.kI", kI);
-    }
-    if (!Robot.preferences.containsKey("CargoArm.kD")) {
-      Robot.preferences.putDouble("CargoArm.kD", kD);
-    }
-     //https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html
-    //TODO: instead of setting these here first, tune them using Phoenix Tuner, then set here in code using those values
-    //NOTE: These are saved directly on the Talon and remain there even after power off - need to be adjusted by code or Phoenix Tuner
-    armTalon1.config_kP(0, kP);
-    armTalon1.config_kI(0, kI);
-    armTalon1.config_kD(0, kD);
-    armTalon1.config_kF(0, 0);
-
-    kP = Robot.preferences.getDouble("CargoArm.kP", 0.0);
-    kI = Robot.preferences.getDouble("CargoArm.kI", 0.0);
-    kD = Robot.preferences.getDouble("CargoArm.kD", 0.0);
-  }
 
   public Cargo() {
     armTalon1.setInverted(true);
@@ -69,7 +43,7 @@ public class Cargo extends Subsystem {
     armTalon1.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 10);
     armTalon1.setSensorPhase(true);
 
-    // armTalon1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
+    armTalon1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
 
     // armTalon2.follow(armTalon1);
 
@@ -90,9 +64,19 @@ public class Cargo extends Subsystem {
     cargomechTalon2.follow(cargomechTalon1);
   }
 
-  public void setArmAngle(double angle) {
-    init();
+  public void initializePID() {
+    double kP = Robot.preferences.getDouble("CargoArm.kP", 0.0);
+    double kI = Robot.preferences.getDouble("CargoArm.kI", 0.0);
+    double kD = Robot.preferences.getDouble("CargoArm.kD", 0.0);
 
+    // https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html
+    armTalon1.config_kP(0, kP);
+    armTalon1.config_kI(0, kI);
+    armTalon1.config_kD(0, kD);
+    armTalon1.config_kF(0, 0);
+  }
+
+  public void setArmAngle(double angle) {
     brake.set(false);
     armTalon1.set(ControlMode.Position, (angle * 1024.0 / 360.0));
     int error = armTalon1.getClosedLoopError();
@@ -101,6 +85,7 @@ public class Cargo extends Subsystem {
     SmartDashboard.putNumber("error", error); 
     SmartDashboard.putNumber("Final position counter", finalPositionCounter);
 
+    // https://www.chiefdelphi.com/t/talonsrx-isfinished-for-close-loop-control/340082/2
     if (Math.abs(error) < RobotMap.cargoArmAngleTolerance * 1024.0 / 360.0)
       finalPositionCounter++;
     else
@@ -112,11 +97,14 @@ public class Cargo extends Subsystem {
   }
 
   public boolean isArmAtPosition() {
-    //TODO: determine if this is a sufficient number of counts/loops (5 ~= 100ms)
     if (finalPositionCounter > 5)
       return true;
     else
       return false;
+  }
+
+  public int getArmPosition() {
+    return armTalon1.getSelectedSensorPosition();
   }
 
   public void cargobrake() {

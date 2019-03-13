@@ -25,25 +25,16 @@ public class LimelightFollow extends Command {
   public LimelightFollow() {
     requires(Robot.kopchassis);
 
-    if (!Robot.preferences.containsKey("Limelight.kP")) {
-      Robot.preferences.putDouble("Limelight.kP", kP);
-    }
-    if (!Robot.preferences.containsKey("Limelight.kI")) {
-      Robot.preferences.putDouble("Limelight.kI", kI);
-    }
-    if (!Robot.preferences.containsKey("Limelight.kD")) {
-      Robot.preferences.putDouble("Limelight.kD", kD);
-    }
-
-    kP = Robot.preferences.getDouble("Limelight.kP", 0.0);
-    kI = Robot.preferences.getDouble("Limelight.kI", 0.0);
-    kD = Robot.preferences.getDouble("Limelight.kD", 0.0);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     error_sum = 0;
+
+    kP = Robot.preferences.getDouble("Limelight.kP", 0.0);
+    kI = Robot.preferences.getDouble("Limelight.kI", 0.0);
+    kD = Robot.preferences.getDouble("Limelight.kD", 0.0);
 
     // turn on the Limelight LED
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);

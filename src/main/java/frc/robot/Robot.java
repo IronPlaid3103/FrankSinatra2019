@@ -69,9 +69,9 @@ public class Robot extends TimedRobot {
 
     m_oi = new OI();
 
-    SmartDashboard.putNumber("kP", preferences.getDouble("Limelight.kP", 0.0));
-    SmartDashboard.putNumber("kI", preferences.getDouble("Limelight.kI", 0.0));
-    SmartDashboard.putNumber("kD", preferences.getDouble("Limelight.kD", 0.0));
+    SmartDashboard.putNumber("LL.kP", preferences.getDouble("Limelight.kP", 0.0));
+    SmartDashboard.putNumber("LL.kI", preferences.getDouble("Limelight.kI", 0.0));
+    SmartDashboard.putNumber("LL.kD", preferences.getDouble("Limelight.kD", 0.0));
 
     SmartDashboard.putNumber("CargokP", preferences.getDouble("CargoArm.kP", 0.0));
     SmartDashboard.putNumber("CargokI", preferences.getDouble("CargoArm.kI", 0.0));
@@ -131,15 +131,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() { 
-    preferences.putDouble("Limelight.kP", SmartDashboard.getNumber("kP", 0.0));
-    preferences.putDouble("Limelight.kI", SmartDashboard.getNumber("kI", 0.0));
-    preferences.putDouble("Limelight.kD", SmartDashboard.getNumber("kD", 0.0));
+    preferences.putDouble("Limelight.kP", SmartDashboard.getNumber("LL.kP", 0.0));
+    preferences.putDouble("Limelight.kI", SmartDashboard.getNumber("LL.kI", 0.0));
+    preferences.putDouble("Limelight.kD", SmartDashboard.getNumber("LL.kD", 0.0));
 
     preferences.putDouble("CargoArm.kP", SmartDashboard.getNumber("CargokP", 0.0));
     preferences.putDouble("CargoArm.kI", SmartDashboard.getNumber("CargokI", 0.0));
     preferences.putDouble("CargoArm.kD", SmartDashboard.getNumber("CargokD", 0.0));
 
     SmartDashboard.putNumber("Cargo Angle", cargo.getArmAngle());
+    SmartDashboard.putNumber("position", cargo.getArmPosition());
 
     // if (!m_oi.operator.getName().equals("")) {
     //   int pov = m_oi.operator.getPOV();
