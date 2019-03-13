@@ -37,7 +37,6 @@ public class HatchRetrieve extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Scheduler.getInstance().add(new DriverRumble(0.3));
   }
 
   // Called when another command which requires one or more of the same

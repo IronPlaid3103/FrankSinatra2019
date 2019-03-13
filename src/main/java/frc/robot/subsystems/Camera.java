@@ -52,6 +52,8 @@ public class Camera extends Subsystem {
     backCamera.setVideoMode(VideoMode.PixelFormat.kMJPEG, 176, 144, 30);
 
     videoSink.setSource(frontCamera); // ensure we show the front camera when we start
+
+    videoSink.getProperty("compression").set(70);
   }
 
   public void toggle() {

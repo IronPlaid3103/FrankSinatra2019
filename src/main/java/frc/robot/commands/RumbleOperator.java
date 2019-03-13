@@ -14,13 +14,12 @@ import frc.robot.Robot;
 /**
  * Add your docs here.
  */
-public class DriverRumble extends TimedCommand {
+public class RumbleOperator extends TimedCommand {
   /**
    * Add your docs here.
    */
-  public DriverRumble(double timeout) {
+  public RumbleOperator(double timeout) {
     super(timeout);
-    
   }
 
   // Called just before this Command runs the first time
@@ -31,13 +30,13 @@ public class DriverRumble extends TimedCommand {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.m_oi.driver.setRumble(RumbleType.kRightRumble, 1.0);
+    Robot.m_oi.operator.setRumble(RumbleType.kRightRumble, 1.0);
   }
 
   // Called once after timeout
   @Override
   protected void end() {
-    Robot.m_oi.driver.setRumble(RumbleType.kRightRumble, 0);
+    Robot.m_oi.operator.setRumble(RumbleType.kRightRumble, 0);
   }
 
   // Called when another command which requires one or more of the same

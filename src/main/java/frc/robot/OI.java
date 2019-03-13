@@ -44,7 +44,7 @@ public class OI {
     if (!joystick.getName().equals("")) {
       Button HatchRetrieve = new JoystickButton(joystick, ControllerMap.B);
       Button HatchScore = new JoystickButton(joystick, ControllerMap.X);
-      HatchRetrieve.whileHeld(new HatchRetrieve());
+      HatchRetrieve.whileHeld(new HatchRetrieveAndRumble());
       HatchScore.whileHeld(new HatchScore());
 
       Button CargoUp = new JoystickButton(joystick, ControllerMap.BUMPER_LEFT);
@@ -52,11 +52,11 @@ public class OI {
       Button CargoLevel1 = new JoystickButton(joystick, ControllerMap.Y);
       CargoUp.whileHeld(new CargoUp());
       CargoDown.whileHeld(new CargoDown());
-      CargoLevel1.whenPressed(new CargoArmLevel1());
+      CargoLevel1.whenPressed(new CargoArmLevel1AndRumble());
 
       Button CargoIntake = new JoystickButton(joystick, ControllerMap.LOGO_LEFT);
       Button CargoDeliver = new JoystickButton(joystick, ControllerMap.LOGO_RIGHT);
-      CargoIntake.whenPressed(new CargoIntake());
+      CargoIntake.whenPressed(new CargoIntakeAndRumble());
       CargoDeliver.whileHeld(new CargoDeliver());
     }
   }

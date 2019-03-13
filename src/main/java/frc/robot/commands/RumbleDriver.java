@@ -7,13 +7,19 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import frc.robot.Robot;
 
-public class CargoIntake extends Command {
-  public CargoIntake() {
-    requires(Robot.cargo);
+/**
+ * Add your docs here.
+ */
+public class RumbleDriver extends TimedCommand {
+  /**
+   * Add your docs here.
+   */
+  public RumbleDriver(double timeout) {
+    super(timeout);
   }
 
   // Called just before this Command runs the first time
@@ -24,19 +30,13 @@ public class CargoIntake extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.cargo.intake();
+    Robot.m_oi.driver.setRumble(RumbleType.kRightRumble, 1.0);
   }
 
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return Robot.cargo.holdingCargo();
-  }
-
-  // Called once after isFinished returns true
+  // Called once after timeout
   @Override
   protected void end() {
-     Robot.cargo.stop();
+    Robot.m_oi.driver.setRumble(RumbleType.kRightRumble, 0);
   }
 
   // Called when another command which requires one or more of the same
