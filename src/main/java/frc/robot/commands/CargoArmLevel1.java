@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
@@ -26,7 +25,6 @@ public class CargoArmLevel1 extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //SmartDashboard.putString("CargoArmLevel1", "executing");
     Robot.cargo.setArmAngle(RobotMap.cargoLevel1);
   }
 
@@ -34,14 +32,12 @@ public class CargoArmLevel1 extends Command {
   @Override
   protected boolean isFinished() {
     boolean finished = Robot.cargo.isArmAtPosition();
-    //if(finished) SmartDashboard.putString("CargoArmLevel1", "finished");
     return finished;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-   // SmartDashboard.putString("CargoArmLevel1", "end");
     Robot.cargo.cargobrake();
   }
 
@@ -49,7 +45,6 @@ public class CargoArmLevel1 extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    //SmartDashboard.putString("CargoArmLevel1", "interrupted");
     Robot.cargo.cargobrake();
   }
 }

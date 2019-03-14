@@ -73,9 +73,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("LL.kI", preferences.getDouble("Limelight.kI", 0.0));
     SmartDashboard.putNumber("LL.kD", preferences.getDouble("Limelight.kD", 0.0));
 
-    SmartDashboard.putNumber("CargokP", preferences.getDouble("CargoArm.kP", 0.0));
-    SmartDashboard.putNumber("CargokI", preferences.getDouble("CargoArm.kI", 0.0));
-    SmartDashboard.putNumber("CargokD", preferences.getDouble("CargoArm.kD", 0.0));
+    SmartDashboard.putNumber("Cargo.kP", preferences.getDouble("CargoArm.kP", 0.0));
+    SmartDashboard.putNumber("Cargo.kI", preferences.getDouble("CargoArm.kI", 0.0));
+    SmartDashboard.putNumber("Cargo.kD", preferences.getDouble("CargoArm.kD", 0.0));
   }
 
   /**
@@ -135,9 +135,9 @@ public class Robot extends TimedRobot {
     preferences.putDouble("Limelight.kI", SmartDashboard.getNumber("LL.kI", 0.0));
     preferences.putDouble("Limelight.kD", SmartDashboard.getNumber("LL.kD", 0.0));
 
-    preferences.putDouble("CargoArm.kP", SmartDashboard.getNumber("CargokP", 0.0));
-    preferences.putDouble("CargoArm.kI", SmartDashboard.getNumber("CargokI", 0.0));
-    preferences.putDouble("CargoArm.kD", SmartDashboard.getNumber("CargokD", 0.0));
+    preferences.putDouble("CargoArm.kP", SmartDashboard.getNumber("Cargo.kP", 0.0));
+    preferences.putDouble("CargoArm.kI", SmartDashboard.getNumber("Cargo.kI", 0.0));
+    preferences.putDouble("CargoArm.kD", SmartDashboard.getNumber("Cargo.kD", 0.0));
 
     SmartDashboard.putNumber("Cargo Angle", cargo.getArmAngle());
     SmartDashboard.putNumber("position", cargo.getArmPosition());

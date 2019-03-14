@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.HatchReset;
 
@@ -21,17 +22,21 @@ public class Hatch extends Subsystem {
   Solenoid pusher = new Solenoid(RobotMap.hatchPusherSolenoid);
 
   public void score() {
+    SmartDashboard.putBoolean("finger", true);
+    SmartDashboard.putBoolean("pusher", true);
     finger.set(true);
-    // TODO: we may need to pause between - if so, we will need to change this to a Command Group and add WaitCommand between
     pusher.set(true);
   }
 
   public void reset() {
+    SmartDashboard.putBoolean("pusher", false);
+    SmartDashboard.putBoolean("finger", false);
     pusher.set(false);
     finger.set(false);
   }
 
   public void retrieve() {
+    SmartDashboard.putBoolean("finger", true);
     finger.set(true);
   }
 
