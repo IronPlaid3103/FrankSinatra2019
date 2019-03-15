@@ -26,7 +26,6 @@ public class OI {
   }
 
   private void initDriverControls(Joystick joystick) {
-    if (!joystick.getName().equals("")) {
       Button ClimberGo = new JoystickButton(joystick, ControllerMap.X);
       Button ClimberStop = new JoystickButton(joystick, ControllerMap.B);
       ClimberGo.whileHeld(new ClimberGo());
@@ -37,14 +36,13 @@ public class OI {
 
       Button LimelightFollow = new JoystickButton(joystick, ControllerMap.A);
       LimelightFollow.whileHeld(new LimelightFollow());
-    }
   }
 
   private void initOperatorControls(Joystick joystick) {
-    if (!joystick.getName().equals("")) {
       Button HatchRetrieve = new JoystickButton(joystick, ControllerMap.B);
       Button HatchScore = new JoystickButton(joystick, ControllerMap.X);
-      HatchRetrieve.whileHeld(new HatchRetrieveAndRumble());
+      HatchRetrieve.whileHeld(new HatchRetrieve());
+      HatchRetrieve.whenReleased(new RumbleDriver(0.5));
       HatchScore.whileHeld(new HatchScore());
 
       Button CargoUp = new JoystickButton(joystick, ControllerMap.BUMPER_LEFT);
@@ -58,7 +56,6 @@ public class OI {
       Button CargoDeliver = new JoystickButton(joystick, ControllerMap.LOGO_RIGHT);
       CargoIntake.whenPressed(new CargoIntakeAndRumble());
       CargoDeliver.whileHeld(new CargoDeliver());
-    }
   }
 
   //// CREATING BUTTONS
