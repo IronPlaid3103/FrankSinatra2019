@@ -28,7 +28,7 @@ public class Robot extends TimedRobot {
   public static Cargo cargo;
   public static Climber climber;
   public static Camera camera;
-  
+
   public static Preferences preferences;
 
   public static boolean toggleDirection = false;
@@ -76,6 +76,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Cargo.kP", preferences.getDouble("CargoArm.kP", 0.0));
     SmartDashboard.putNumber("Cargo.kI", preferences.getDouble("CargoArm.kI", 0.0));
     SmartDashboard.putNumber("Cargo.kD", preferences.getDouble("CargoArm.kD", 0.0));
+
+    SmartDashboard.putNumber("TurnComp", preferences.getDouble("Drivetrain.turncompensation", 0.0));
   }
 
   /**
@@ -130,7 +132,7 @@ public class Robot extends TimedRobot {
    * This function is called periodically during operator control.
    */
   @Override
-  public void teleopPeriodic() { 
+  public void teleopPeriodic() {
     preferences.putDouble("Limelight.kP", SmartDashboard.getNumber("LL.kP", 0.0));
     preferences.putDouble("Limelight.kI", SmartDashboard.getNumber("LL.kI", 0.0));
     preferences.putDouble("Limelight.kD", SmartDashboard.getNumber("LL.kD", 0.0));
@@ -139,26 +141,28 @@ public class Robot extends TimedRobot {
     preferences.putDouble("CargoArm.kI", SmartDashboard.getNumber("Cargo.kI", 0.0));
     preferences.putDouble("CargoArm.kD", SmartDashboard.getNumber("Cargo.kD", 0.0));
 
+    preferences.putDouble("Drivetrain.turncompensation", SmartDashboard.getNumber("TurnComp", 0.0));
+
     SmartDashboard.putNumber("Cargo Angle", cargo.getArmAngle());
     SmartDashboard.putNumber("position", cargo.getArmPosition());
 
     // if (!m_oi.operator.getName().equals("")) {
-    //   int pov = m_oi.operator.getPOV();
-    //   SmartDashboard.putNumber("pov", pov);
-    //   switch (pov) {
-    //   case 0:
-    //     Scheduler.getInstance().add(new CargoArmLevel3());
-    //     break;
-    //   case 90:
-    //     Scheduler.getInstance().add(new CargoArmLevel2());
-    //     break;
-    //   case 180:
-    //     Scheduler.getInstance().add(new CargoArmLevel1());
-    //     break;
-    //   case 270:
-    //     Scheduler.getInstance().add(new CargoArmPark());
-    //     break;
-    //   }
+    // int pov = m_oi.operator.getPOV();
+    // SmartDashboard.putNumber("pov", pov);
+    // switch (pov) {
+    // case 0:
+    // Scheduler.getInstance().add(new CargoArmLevel3());
+    // break;
+    // case 90:
+    // Scheduler.getInstance().add(new CargoArmLevel2());
+    // break;
+    // case 180:
+    // Scheduler.getInstance().add(new CargoArmLevel1());
+    // break;
+    // case 270:
+    // Scheduler.getInstance().add(new CargoArmPark());
+    // break;
+    // }
     // }
 
     Scheduler.getInstance().run();

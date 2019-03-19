@@ -23,7 +23,7 @@ public class RobotMap {
   public static int cargoarmTalon1 = 1;
   //public static int cargoarmTalon2 = 2; only one talon is being used for cargo arm 
 
-  public static int cargomechTalon1 = 3;
+  public static int cargomechTalon1 = 3;  
   public static int cargomechTalon2 = 4;
 
   public static double cargoGrabberCurrentLimit = 7.0;

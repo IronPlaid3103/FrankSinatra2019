@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArcadeDrive;
 
@@ -25,6 +26,7 @@ public class Tank_Drive extends Subsystem {
   WPI_TalonSRX brDrive = new WPI_TalonSRX(RobotMap.brDrive);
 
   DifferentialDrive kopdrive = new DifferentialDrive(flDrive, frDrive);
+
 
   public void configDrive() {
     blDrive.follow(flDrive);
@@ -50,6 +52,13 @@ public class Tank_Drive extends Subsystem {
   public void teleopDrive(Joystick driveControl) {
     double forward = driveControl.getRawAxis(1);
     double turn = driveControl.getRawAxis(4);
+
+    double turncompensation = Robot.preferences.getDouble("Drivetrain.turncompensation", 0.0);
+    if (forward > 0)
+      turn = turn + turncompensation;
+     else if (forward < 0)
+      turn= turn - turncompensation;
+
 
     //TODO: If we want to toggle the driving behavior when the camera has toggled, this would do it
     // if(Robot.toggleDirection) {
