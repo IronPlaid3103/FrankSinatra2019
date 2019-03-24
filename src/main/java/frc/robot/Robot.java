@@ -26,7 +26,8 @@ public class Robot extends TimedRobot {
   public static Tank_Drive kopchassis = new Tank_Drive();
   public static Hatch hatch;
   public static Cargo cargo;
-  public static Climber climber;
+  public static ClimberFront climberF;
+  public static ClimberBack climberB;
   public static Camera camera;
   public static Limelight limelight; 
 
@@ -42,7 +43,8 @@ public class Robot extends TimedRobot {
   public void robotInit(){ 
     preferences = Preferences.getInstance();
       hatch = new Hatch();
-      climber = new Climber();
+      climberF = new ClimberFront();
+      climberB = new ClimberBack();
       cargo = new Cargo();
       camera = new Camera();
       limelight = new Limelight();

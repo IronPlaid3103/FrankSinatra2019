@@ -9,27 +9,30 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.commands.ClimberStop;
 
 /**
  * Add your docs here.
  */
-public class Climber extends Subsystem {
-
-  Solenoid front = new Solenoid(RobotMap.climberfrontSolenoid);
+public class ClimberBack extends Subsystem {
+  // Put methods for controlling this subsystem
+  // here. Call these from Commands.
   Solenoid back = new Solenoid(RobotMap.climberbackSolenoid);
-
-  public void pushup() {
-    front.set(true);
+  
+  public void backUp() {
+    back.set(true);
+    SmartDashboard.putBoolean("Climber Back", true);
   }
-
-  public void pushstop() {
-    front.set(false);
+  
+  public void backDown() {
+    back.set(false);
+    SmartDashboard.putBoolean("Climber Back", false);
   }
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new ClimberStop());
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
   }
 }

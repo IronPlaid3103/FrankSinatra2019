@@ -10,9 +10,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ClimberGo extends Command {
-  public ClimberGo() {
-    requires(Robot.climber);
+public class ClimberBackDown extends Command {
+  public ClimberBackDown() {
+    requires(Robot.climberB);
   }
 
   // Called just before this Command runs the first time
@@ -23,7 +23,7 @@ public class ClimberGo extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.climber.pushup();
+    Robot.climberB.backDown();
   }
 
   // Make this return true when this Command no longer needs to run execute()

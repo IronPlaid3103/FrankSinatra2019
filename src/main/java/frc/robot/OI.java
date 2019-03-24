@@ -26,11 +26,6 @@ public class OI {
   }
 
   private void initDriverControls(Joystick joystick) {
-      Button ClimberGo = new JoystickButton(joystick, ControllerMap.X);
-      Button ClimberStop = new JoystickButton(joystick, ControllerMap.B);
-      ClimberGo.whileHeld(new ClimberGo());
-      ClimberStop.whileHeld(new ClimberStop());
-
       Button CameraSwitch = new JoystickButton(joystick, ControllerMap.BUMPER_LEFT);
       CameraSwitch.whenPressed(new SwitchCamera());
 
@@ -45,17 +40,25 @@ public class OI {
       HatchRetrieve.whenReleased(new RumbleDriver(0.5));
       HatchScore.whileHeld(new HatchScore());
 
-      Button CargoUp = new JoystickButton(joystick, ControllerMap.BUMPER_LEFT);
-      Button CargoDown = new JoystickButton(joystick, ControllerMap.BUMPER_RIGHT);
-      Button CargoLevel1 = new JoystickButton(joystick, ControllerMap.Y);
-      CargoUp.whileHeld(new CargoUp());
-      CargoDown.whileHeld(new CargoDown());
-      CargoLevel1.whenPressed(new CargoArmLevel1AndRumble());
+      //Gerard and Iago are taking a long nap :(          
+      // Button CargoUp = new JoystickButton(joystick, ControllerMap.BUMPER_LEFT);
+      // Button CargoDown = new JoystickButton(joystick, ControllerMap.BUMPER_RIGHT);
+      // Button CargoLevel1 = new JoystickButton(joystick, ControllerMap.Y);
+      // CargoUp.whileHeld(new CargoUp());
+      // CargoDown.whileHeld(new CargoDown());
+      // CargoLevel1.whenPressed(new CargoArmLevel1AndRumble());
 
       Button CargoIntake = new JoystickButton(joystick, ControllerMap.LOGO_LEFT);
       Button CargoDeliver = new JoystickButton(joystick, ControllerMap.LOGO_RIGHT);
       CargoIntake.whenPressed(new CargoIntakeAndRumble());
       CargoDeliver.whileHeld(new CargoDeliver());
+
+      Button FrontUp = new JoystickButton(joystick, ControllerMap.BUMPER_LEFT);
+      Button BackUp = new JoystickButton(joystick, ControllerMap.BUMPER_RIGHT);
+      FrontUp.whileHeld(new ClimberFrontUp());
+      FrontUp.whenReleased(new ClimberFrontDown());
+      BackUp.whileHeld(new ClimberBackUp());
+      BackUp.whenReleased(new ClimberBackDown());
   }
 
   //// CREATING BUTTONS
