@@ -27,6 +27,7 @@ public class Tank_Drive extends Subsystem {
 
   DifferentialDrive kopdrive = new DifferentialDrive(flDrive, frDrive);
 
+  double deadband = 0.1;
 
   public void configDrive() {
     blDrive.follow(flDrive);
@@ -37,7 +38,7 @@ public class Tank_Drive extends Subsystem {
     blDrive.setInverted(false);
     brDrive.setInverted(false);
 
-    kopdrive.setDeadband(0.1);
+    kopdrive.setDeadband(deadband);
 
     // TODO: set up encoders for the two Talons into which the encoders are connected (i.e. repeat this code twice)
     // frDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
@@ -53,11 +54,13 @@ public class Tank_Drive extends Subsystem {
     double forward = driveControl.getRawAxis(1);
     double turn = driveControl.getRawAxis(4);
 
+  if(Math.abs(forward)> deadband) {
     double turncompensation = Robot.preferences.getDouble("Drivetrain.turncompensation", 0.0);
     if (forward > 0)
       turn = turn + turncompensation;
      else if (forward < 0)
       turn= turn - turncompensation;
+    }
 
 
     //TODO: If we want to toggle the driving behavior when the camera has toggled, this would do it

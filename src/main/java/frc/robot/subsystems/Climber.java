@@ -17,14 +17,15 @@ import frc.robot.commands.ClimberStop;
  */
 public class Climber extends Subsystem {
 
-  Solenoid push = new Solenoid(RobotMap.climberSolenoid);
+  Solenoid front = new Solenoid(RobotMap.climberfrontSolenoid);
+  Solenoid back = new Solenoid(RobotMap.climberbackSolenoid);
 
   public void pushup() {
-    push.set(true);
+    front.set(true);
   }
 
   public void pushstop() {
-    push.set(false);
+    front.set(false);
   }
 
   @Override

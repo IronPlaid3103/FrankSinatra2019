@@ -40,5 +40,6 @@ public class RobotMap {
 
   public static int cargoBrakeSolenoid = 7;
 
-  public static int climberSolenoid = 2;
+  public static int climberfrontSolenoid = 2;
+  public static int climberbackSolenoid = 4; //still needs to be decided
 }

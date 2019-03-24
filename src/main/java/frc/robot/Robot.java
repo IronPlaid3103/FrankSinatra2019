@@ -28,6 +28,7 @@ public class Robot extends TimedRobot {
   public static Cargo cargo;
   public static Climber climber;
   public static Camera camera;
+  public static Limelight limelight; 
 
   public static Preferences preferences;
 
@@ -38,32 +39,14 @@ public class Robot extends TimedRobot {
    * for any initialization code.
    */
   @Override
-  public void robotInit() {
+  public void robotInit(){ 
     preferences = Preferences.getInstance();
-
-    try {
       hatch = new Hatch();
-    } catch (Exception ex) {
-      System.out.println("Failed Create Hatch");
-    }
-
-    try {
       climber = new Climber();
-    } catch (Exception ex) {
-      System.out.println("Failed Create Climber");
-    }
-
-    try {
       cargo = new Cargo();
-    } catch (Exception ex) {
-      System.out.println("Failed Create Cargo");
-    }
-
-    try {
       camera = new Camera();
-    } catch (Exception ex) {
-      System.out.println("Failed Create Camera");
-    }
+      limelight = new Limelight();
+    
 
     kopchassis.configDrive();
 
